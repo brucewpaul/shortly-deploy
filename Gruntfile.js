@@ -37,6 +37,7 @@ module.exports = function(grunt) {
         files: [
           'public/client/**/*.js',
           'public/lib/**/*.js',
+          'views/**/*.js',
         ],
         tasks: [
           'concat',
