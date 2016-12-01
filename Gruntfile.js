@@ -7,11 +7,11 @@ module.exports = function(grunt) {
         separator: ';',
       },
       dist1: {
-        src: ['public/client/*.js'],
+        src: ['public/client/app.js', 'public/client/link.js', 'public/client/links.js', 'public/client/linkView.js', 'public/client/linksView.js', 'public/client/createLinkView.js', 'public/client/router.js'],
         dest: 'public/dist/clientfiles.js',
       },
       dist2: {
-        src: ['public/lib/*.js'],
+        src: ['public/lib/jquery.js', 'public/lib/underscore.js', 'public/lib/backbone.js', 'public/lib/handlebars.js'],
         dest: 'public/dist/libraries.js',
       },
     },
@@ -43,6 +43,7 @@ module.exports = function(grunt) {
     eslint: {
       target: [
         // Add list of files to lint here
+        'public/client/app.js', 'public/client/link.js', 'public/client/links.js', 'public/client/linkView.js', 'public/client/linksView.js', 'public/client/createLinkView.js', 'public/client/router.js', 'public/lib/jquery.js', 'public/lib/underscore.js', 'public/lib/backbone.js', 'public/lib/handlebars.js'
       ]
     },
 
@@ -62,8 +63,7 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           'public/client/**/*.js',
-          'public/lib/**/*.js',
-          'views/**/*.ejs',
+          'public/lib/**/*.js'
         ],
         tasks: [
           'concat',
@@ -73,14 +73,16 @@ module.exports = function(grunt) {
       css: {
         files: 'public/*.css',
         tasks: ['cssmin']
-      },
-      options: {
-        livereload: true
       }
     },
 
     shell: {
-      prodServer: {
+      multiple: {
+        command: [
+          'git add .',
+          'git commit -m "deploying latest changes from grunt" ',
+          'git push live master'
+        ].join('&&')
       }
     },
   });
@@ -103,15 +105,16 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
+    'eslint',
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', ['concat', 'uglify', 'cssmin'
-  ]);
+  grunt.registerTask('build', ['test', 'concat', 'uglify', 'cssmin']);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run([ 'shell' ]);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -119,6 +122,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'build', 'upload'
   ]);
 
 
