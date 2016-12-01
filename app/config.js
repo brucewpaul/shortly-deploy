@@ -1,3 +1,26 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var urls = new Schema({
+  url: String,
+  baseUrl: String,
+  code: String,
+  title: String,
+  visits: Number,
+}, {
+  timestamps: true
+});
+
+var users = new Schema({
+  username: {
+    type: String,
+    unique: true
+  },
+  password: String
+}, {
+  timestamps: true
+});
+/*
 var path = require('path');
 var knex = require('knex')({
   client: 'sqlite3',
@@ -36,5 +59,5 @@ db.knex.schema.hasTable('users').then(function(exists) {
     });
   }
 });
-
+*/
 module.exports = db;
