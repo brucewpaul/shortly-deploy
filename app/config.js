@@ -1,4 +1,10 @@
 var mongoose = require('mongoose');
+
+module.exports = mongoose.connect('mongodb://127.0.0.1/shortly');
+
+
+/*
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var urls = new Schema({
@@ -20,6 +26,10 @@ var users = new Schema({
 }, {
   timestamps: true
 });
+
+module.exports = db;
+*/
+
 /*
 var path = require('path');
 var knex = require('knex')({
@@ -60,4 +70,4 @@ db.knex.schema.hasTable('users').then(function(exists) {
   }
 });
 */
-module.exports = db;
+
